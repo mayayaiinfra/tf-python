@@ -1,0 +1,59 @@
+[build-system]
+requires = ["hatchling"]
+build-backend = "hatchling.build"
+
+[project]
+name = "thunderfire"
+version = "1.0.0"
+description = "THUNDERFIRE autonomous node management for AI agent frameworks"
+readme = "README.md"
+license = "MIT"
+requires-python = ">=3.10"
+authors = [
+    { name = "MAYAYAI", email = "dev@mayayai.com" }
+]
+keywords = ["thunderfire", "autonomous", "iot", "robotics", "agents", "mcp", "a2a", "langchain", "crewai"]
+classifiers = [
+    "Development Status :: 4 - Beta",
+    "Intended Audience :: Developers",
+    "Topic :: Scientific/Engineering :: Artificial Intelligence",
+    "Topic :: Software Development :: Libraries :: Python Modules",
+    "License :: OSI Approved :: MIT License",
+    "Programming Language :: Python :: 3",
+    "Programming Language :: Python :: 3.10",
+    "Programming Language :: Python :: 3.11",
+    "Programming Language :: Python :: 3.12",
+]
+
+dependencies = [
+    "httpx>=0.27.0",
+]
+
+[project.optional-dependencies]
+langchain = ["langchain-core>=0.3.0"]
+crewai = ["crewai>=0.80.0"]
+autogen = ["autogen-agentchat>=0.4.0"]
+openai = ["openai>=1.50.0"]
+mcp = ["mcp>=1.0.0"]
+all = ["thunderfire[langchain,crewai,autogen,openai,mcp]"]
+dev = ["pytest>=8.0.0", "pytest-asyncio>=0.24.0", "respx>=0.22.0"]
+
+[project.scripts]
+thunderfire-mcp = "thunderfire.mcp.server:main"
+
+[project.urls]
+Homepage = "https://mayayai.com/thunderfire"
+Documentation = "https://docs.mayayai.com/thunderfire/python"
+Repository = "https://github.com/mayayai/tf-python"
+
+[tool.hatch.build.targets.sdist]
+include = [
+    "/src",
+]
+
+[tool.hatch.build.targets.wheel]
+packages = ["src/thunderfire"]
+
+[tool.pytest.ini_options]
+asyncio_mode = "auto"
+testpaths = ["tests"]
