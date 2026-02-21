@@ -1,5 +1,11 @@
 # THUNDERFIRE Python SDK
 
+[![License: MIT](https://img.shields.io/badge/License-MIT-yellow.svg)](LICENSE)
+[![Python](https://img.shields.io/badge/Python-3.10%2B-3776AB.svg)](https://python.org)
+[![PyPI](https://img.shields.io/badge/PyPI-thunderfire-blue.svg)](https://pypi.org/project/thunderfire/)
+[![LangChain](https://img.shields.io/badge/LangChain-compatible-1C3C3C.svg)](https://langchain.com)
+[![CrewAI](https://img.shields.io/badge/CrewAI-compatible-FF6B6B.svg)](https://crewai.com)
+
 Python SDK for THUNDERFIRE autonomous node management with native integrations for major AI agent frameworks.
 
 ## Installation
