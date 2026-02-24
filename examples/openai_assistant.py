@@ -2,12 +2,21 @@
 """
 THUNDERFIRE OpenAI Assistant Example
 
-Using OpenAI function calling with THUNDERFIRE tools.
+Using OpenAI function calling with THUNDERFIRE tools via the provider-agnostic API.
+
+This example demonstrates the new thunderfire.llm provider interface, which supports
+multiple LLM providers (OpenAI, Anthropic, Local). The provider is auto-detected from
+environment variables.
 
 Usage:
     export THUNDERFIRE_API_KEY=tf_live_...
     export OPENAI_API_KEY=sk-...
     python openai_assistant.py
+
+Provider Support:
+    - OpenAI: Set OPENAI_API_KEY
+    - Anthropic: Set ANTHROPIC_API_KEY (use with Anthropic SDK instead of OpenAI SDK)
+    - Local: Set STREAM_LOCAL_URL (use with OpenAI-compatible local inference)
 """
 
 import os
@@ -32,14 +41,17 @@ def main():
         sys.exit(1)
 
     from thunderfire import ThunderFireClientSync
-    from thunderfire.openai import get_function_definitions, handle_tool_call, create_tool_message
+    from thunderfire.llm import get_provider
 
     # Initialize clients
     print("Initializing clients...")
     openai_client = OpenAI()
     tf_client = ThunderFireClientSync()
-    tools = get_function_definitions()
-    print(f"Loaded {len(tools)} THUNDERFIRE tools")
+
+    # Get provider (auto-detects OpenAI from OPENAI_API_KEY)
+    provider = get_provider("openai", client=tf_client)
+    tools = provider.get_tool_definitions()
+    print(f"Loaded {len(tools)} THUNDERFIRE tools (provider: {provider.provider_name})")
 
     # Initial message
     messages = [
@@ -96,15 +108,12 @@ def main():
         for tool_call in assistant_message.tool_calls:
             print(f"[Calling {tool_call.function.name}...]")
 
-            result = handle_tool_call(tool_call, tf_client)
-            messages.append(create_tool_message(tool_call.id, result))
+            result = provider.handle_tool_call(tool_call)
+            tool_message = provider.create_tool_response(tool_call.id, result)
+            messages.append(tool_message)
 
             # Pretty print result
-            try:
-                parsed = json.loads(result)
-                print(f"  Result: {json.dumps(parsed, indent=2)[:200]}...")
-            except:
-                print(f"  Result: {result[:200]}...")
+            print(f"  Result: {json.dumps(result, indent=2)[:200]}...")
 
     print("\n--- Conversation Complete ---")
 

@@ -4,10 +4,20 @@ THUNDERFIRE LangChain Agent Example
 
 A ReAct agent that manages autonomous nodes using THUNDERFIRE tools.
 
+This example uses ThunderFireToolkit, which provides LangChain-compatible tool wrappers.
+The toolkit internally uses the provider-agnostic thunderfire.llm interface and will
+auto-detect your LLM provider (OpenAI, Anthropic, Local) from environment variables.
+
 Usage:
     export THUNDERFIRE_API_KEY=tf_live_...
     export OPENAI_API_KEY=sk-...
     python langchain_agent.py
+
+Provider Support:
+    The toolkit auto-detects your provider:
+    - OpenAI: Set OPENAI_API_KEY (default)
+    - Anthropic: Set ANTHROPIC_API_KEY
+    - Local: Set STREAM_LOCAL_URL
 """
 
 import os

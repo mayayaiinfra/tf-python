@@ -4,10 +4,20 @@ THUNDERFIRE AutoGen Chat Example
 
 An AutoGen conversation between a user proxy and a fleet manager agent.
 
+This example uses ThunderFireAutoGen, which provides AutoGen-compatible tool functions.
+The integration internally uses the provider-agnostic thunderfire.llm interface and will
+auto-detect your LLM provider (OpenAI, Anthropic, Local) from environment variables.
+
 Usage:
     export THUNDERFIRE_API_KEY=tf_live_...
     export OPENAI_API_KEY=sk-...
     python autogen_chat.py
+
+Provider Support:
+    The integration auto-detects your provider:
+    - OpenAI: Set OPENAI_API_KEY (default)
+    - Anthropic: Set ANTHROPIC_API_KEY
+    - Local: Set STREAM_LOCAL_URL
 """
 
 import os

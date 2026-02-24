@@ -4,10 +4,20 @@ THUNDERFIRE CrewAI Crew Example
 
 A crew of agents that monitor and maintain an autonomous node fleet.
 
+This example uses ThunderFireTools, which provides CrewAI-compatible tool wrappers.
+The integration internally uses the provider-agnostic thunderfire.llm interface and will
+auto-detect your LLM provider (OpenAI, Anthropic, Local) from environment variables.
+
 Usage:
     export THUNDERFIRE_API_KEY=tf_live_...
     export OPENAI_API_KEY=sk-...
     python crewai_crew.py
+
+Provider Support:
+    The integration auto-detects your provider:
+    - OpenAI: Set OPENAI_API_KEY (default)
+    - Anthropic: Set ANTHROPIC_API_KEY
+    - Local: Set STREAM_LOCAL_URL
 """
 
 import os
